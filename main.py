@@ -7,15 +7,15 @@ from particle import resample
 import time 
 
 winSize = 600
-cap = cv.VideoCapture(0)
+# cap = cv.VideoCapture(0)
+cap = cv.VideoCapture("foot.mp4")
 time.sleep(0.5)
 cap.set(3, winSize)
 cap.set(4, winSize)
-#cap = cv.VideoCapture("foot.mp4")
 
 
-#env = [x,y,w/2,h/2,frame,roiMeanSigma,particules]
-env = [-42,-42,8,22,None,None,None]
+#env = [x,y,w/2,h/2,frame,referenceFeatures(HSV hist, ORBs),particules, cmd]
+env = [-42,-42,8,22,None,None,None, None]
 cv.namedWindow('win', 0)
 cv.setMouseCallback('win', focus, env)
 
@@ -49,7 +49,7 @@ while 1:
 			Y += y
 			cv.circle(env[4],(int(x),int(y)),1,(255,0,0),-1)
 		env[0], env[1] = int(X)/len(env[6]), int(Y)/len(env[6])
-		a,b,c,d = env[1]-env[3],env[1]+env[3],env[0]-env[2],env[0]+env[2]
+		a,b,c,d = int(env[1]-env[3]),int(env[1]+env[3]),int(env[0]-env[2]),int(env[0]+env[2])
 		cv.rectangle(env[4], (c,a), (d,b), (255,0,0), 1)
 	
 	cv.imshow('win', env[4])
